@@ -32,11 +32,11 @@ function createLimiter(limit) {
 
   /**
    * Викликає функцію-лімітер.
-   * @returns {"Ok"|"Error"|0} "Ok" якщо ліміт не вичерпано, "Error" якщо ліміт перевищено, 0 якщо ліміт невалідний.
+   * @returns {"Ok"|"Error"} "Ok" якщо ліміт не вичерпано, "Error" якщо ліміт перевищено або введено не праильне значення.
    */
   return function () {
     if (Number.isNaN(LIMIT)) {
-      return 0;
+      return "Error";
     }
 
     if (typeof LIMIT === "number" && LIMIT >= 0) {
@@ -46,7 +46,7 @@ function createLimiter(limit) {
       }
       return "Error";
     } else {
-      return 0;
+      return "Error";
     }
   };
 }
