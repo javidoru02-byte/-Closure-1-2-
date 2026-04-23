@@ -4,16 +4,13 @@
  * @returns {function(string): string} Функція, яка приймає повідомлення і повертає його з префіксом.
  */
 function createLogger(prefix) {
-  const PREFIX = prefix;
-
   /**
    * Логує повідомлення з префіксом.
    * @param {string} message - Повідомлення для логування.
    * @returns {string} Повідомлення з доданим префіксом.
    */
   return function (message) {
-    const MESSAGE = message;
-    return PREFIX + MESSAGE;
+    return prefix + message;
   };
 }
 
@@ -24,10 +21,9 @@ console.log(authLogger(`User logged in`));
 /**
  * Створює функцію-лімітер, яку можна викликати обмежену кількість разів.
  * @param {number} limit - Максимальна кількість викликів поверненої функції. Має бути числом і не NaN.
- * @returns {function(): string|number} Функція, що повертає "Ok" поки ліміт не вичерпано, "Error" після перевищення, або 0 якщо ліміт невалідний.
+ * @returns {function(): string} Функція, що повертає "Ok" поки ліміт не вичерпано, "Error" після перевищення або якщо ліміт невалідний.
  */
 function createLimiter(limit) {
-  const LIMIT = limit;
   let step = 0;
 
   /**
@@ -35,19 +31,18 @@ function createLimiter(limit) {
    * @returns {"Ok"|"Error"} "Ok" якщо ліміт не вичерпано, "Error" якщо ліміт перевищено або введено не праильне значення.
    */
   return function () {
-    if (Number.isNaN(LIMIT)) {
+    if (Number.isNaN(limit)) {
       return "Error";
     }
 
-    if (typeof LIMIT === "number" && LIMIT >= 0) {
-      if (step < LIMIT) {
+    if (typeof limit === "number" && limit >= 0) {
+      if (step < limit) {
         ++step;
         return "Ok";
       }
       return "Error";
-    } else {
-      return "Error";
     }
+    return "Error";
   };
 }
 
